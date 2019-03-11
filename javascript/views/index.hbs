@@ -13,10 +13,10 @@
       </div>
       <div>
         <label for="city-field">City:</label>
-        <input id="city-field" name="city" type="text">
+        <input id="city-field" name="city" type="text" required>
 
         <label for="state-field">State:</label>
-        <select id="state-field" name="state">
+        <select id="state-field" name="state" required>
           <option></option>
           {{#each states}}
             <option value="{{this}}">{{this}}</option>
@@ -30,9 +30,15 @@
       </div>
     </form>
   </div>
-  {{#if results}}
+  {{#if error}}
+    <div class="finder-error">
+      <h1>Results</h1>
+      <p>{{error}}</p>
+    </div>
+  {{else if results}}
     <div class="finder-results">
-      {{results}}
+      <h1>Results</h1>
+      <p>{{results}}</p>
     </div>
   {{/if}}
 </div>
