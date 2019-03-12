@@ -38,7 +38,73 @@
   {{else if results}}
     <div class="finder-results">
       <h1>Results</h1>
-      <p>{{results}}</p>
+      {{#each results}}
+        <h2>{{description}}</h2>
+        <a href={{website}}>Website</a>
+        <br/>
+        <br/>
+        <a href={{polling-place-url}}>Polling Place</a>
+        <p>Population: {{population}}</p>
+        {{#each district-divisions}}
+          <h3>Authority: {{voter-registration-authority-level}}</h3>
+          <h4>Voting Methods</h4>
+          <table>
+            <tr>
+              <th>Primary</th>
+              <th>Type</th>
+              <th>Excuse Required?</th>
+              <th>Instructions</th>
+              <th>Ballot Deadline</th>
+            </tr>
+          {{#each voting-methods}}
+            <tr>
+              <td>{{#if primary}}Yes{{else}}No{{/if}}</td>
+              <td>{{type}}</td>
+              <td>{{#if excuse-required}}Yes{{else}}No{{/if}}</td>
+              <td>{{#if instructions}}{{instructions.voting-id}}{{else}}None{{/if}}</td>
+              <td>
+                {{#if ballot-request-deadline-received}}
+                {{ ballot-request-deadline-received}}
+                {{else}}
+                None
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+        <h4>Voting Registration Methods</h4>
+        <table>
+          <tr>
+            <th>Type</th>
+            <th>Instructions</th>
+            <th>Deadline</th>
+          </tr>
+          {{#each voter-registration-methods}}
+            <tr>
+              <td>{{type}}</td>
+              <td>
+                {{#if instructions}}
+                  {{instructions.signature}}
+                  {{instructions.idnumber}}
+                  {{instructions.registration}}
+                {{else}}
+                  None
+                {{/if}}
+              </td>
+              <td>
+                {{#if deadline-postmarked}}
+                {{deadline-postmarked}}
+                {{else if deadline-online}}
+                {{deadline-online}}
+                {{else}}
+                None
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </table>
+        {{/each}}
+      {{/each}}
     </div>
   {{/if}}
 </div>

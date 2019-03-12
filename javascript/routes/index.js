@@ -3,6 +3,13 @@ var router = express.Router();
 var us_states = require('../us_state.js');
 const fetch = require('node-fetch');
 
+/* Generally would put such a function in a "tools" or "helpers" directory
+but keeping here for to keep my code in as little places as possible for
+this small project.
+*/
+/*
+Takes a state and city and generates a Turbovote API url with OCD-IDs.
+*/
 function getUrl(state, city) {
   // Add required state and city data to the Turbovote API url
   let url = "https://api.turbovote.org/elections/upcoming?district-divisions=ocd-division/country:us/state:"
@@ -27,7 +34,8 @@ router.post('/search', function(req, res) {
   }
   else {
     let url = getUrl(data.state, data.city)
-    // Fetch data from Turbovote and then send to index template or send error message to index template
+    /* Fetch data from Turbovote and then send to index template
+    or send error message to index template if no returned data or error */
     fetch(url, {
       method: "GET",
       headers: {
